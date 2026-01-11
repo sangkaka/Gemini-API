@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel
 
 from .image import Image
@@ -16,17 +18,23 @@ class ModelOutput(BaseModel):
         List of all candidates returned from gemini
     chosen: `int`, optional
         Index of the chosen candidate, by default will choose the first one
+    parsed_json: `Any`, optional
+        Raw parsed JSON response data from Gemini API
+    raw_body: `str`, optional
+        Raw unparsed response text from Gemini API
     """
 
     metadata: list[str]
     candidates: list[Candidate]
     chosen: int = 0
+    parsed_json: Any = None
+    raw_body: str | None = None
 
     def __str__(self):
         return self.text
 
     def __repr__(self):
-        return f"ModelOutput(metadata={self.metadata}, chosen={self.chosen}, candidates={self.candidates})"
+        return f"ModelOutput(metadata={self.metadata}, chosen={self.chosen}, candidates={self.candidates}, parsed_json={self.parsed_json}, raw_body={self.raw_body})"
 
     @property
     def text(self) -> str:

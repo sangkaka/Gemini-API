@@ -531,6 +531,8 @@ class GeminiClient(GemMixin):
                 output = ModelOutput(
                     metadata=get_nested_value(body, [1], []),
                     candidates=output_candidates,
+                    parsed_json=response_json,
+                    raw_body=response.text,
                 )
             except (TypeError, IndexError) as e:
                 logger.debug(
